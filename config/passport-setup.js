@@ -2,6 +2,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
 const keys = require('./keys');
 
+
 passport.use(
     new GoogleStrategy({
         // options for the strategy
@@ -9,6 +10,7 @@ passport.use(
         // client id and client secret
         clientID: keys.google.clientID,
         clientSecret: keys.google.clientSecret
+        //this is what fired when the user goes to login with their profile
     }, (accessToken, refreshToken, profile, done) => {
         //accessToken is a token we receive from google to read user data
         //refresh token refreshes the access token
