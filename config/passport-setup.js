@@ -3,18 +3,19 @@ const GoogleStrategy = require('passport-google-oauth20');
 const keys = require('./keys');
 const User = require('../models/user-model');
 
+
+//done method is basically passing it to the next stage of the passport process
 //passing the done method the user id associated with that user on OUR DATA that will get stuffed into a cooke
 passport.serializeUser((user, done) => {
     done(null, user.id);
 });
 
+// when the cookie comes back from the browser, take the id that is stored in it and find the user based on the stored user 
 passport.deserializeUser((id, done) => {
     User.findById(id).then((user) => {
-        
         done(null, user);
     })
 });
-
 
 
 passport.use(
