@@ -11,24 +11,32 @@ passport.use(
         // client id and client secret
         clientID: keys.google.clientID,
         clientSecret: keys.google.clientSecret
-        //this is what fired when the user goes to login with their profile
+        // passport callback function
     }, (accessToken, refreshToken, profile, done) => {
         //accessToken is a token we receive from google to read user data
         //refresh token refreshes the access token
         //profile is the information that passport comes back with when it takes the code to google and brings back the profile information
         //done is called when we are done with this callback function
 
-        // passport callback function
-        console.log('passport callback function fired')
-        console.log(profile)
+        // check if user already exists in our db
+        User.findOne({ googleId: profile.id }).then((currentUser) => {
+            if (currentUser) {
+                // already have a user
+                console.log('user is ' + currentUser);
+            } else {
+                // create a new user and save to db
+                new User({
+                    username: profile.displayName,
+                    googleId: profile.id
 
-        // create a new user and save to db
-        new User ({
-            username: profile.displayName,
-            googleId: profile.id
-
-        }).save().then((newUser) => {
-            console.log('new user created' + newUser)
+                }).save().then((newUser) => {
+                    console.log('new user created' + newUser)
+                })
+            }
         })
+
+
+
+
     })
 )
