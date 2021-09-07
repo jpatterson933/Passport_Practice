@@ -51,9 +51,13 @@
 <body>
     <nav>
         <ul>
-            <li><a href="/auth/logout">Logout</a></li>
-            <li><a href="/auth/login">Login</a></li>
-            <li><a href="/">Homepage</a></li>
+            <% if (user) {%>
+                <li><a href="/auth/logout">Log out</a></li>
+                <% } else { %>
+                <li><a href="/auth/login">Login</a></li>
+                <% } %>
+                <li><a href="/">Homepage</a></li>
+                <li><a href="/profile">Profile</a></li>
         </ul>
     </nav>
 
@@ -62,6 +66,7 @@
         <h2>You are going to become a coding legend!</h2>
     </header>
     <main>
+        <img src="<%= user.thumbnail %>" />
         <p>This is a way to strengthen your coding skills :)</p>
         <p> Even more information about the user...</p>
     </main>

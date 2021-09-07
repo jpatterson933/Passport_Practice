@@ -13,7 +13,7 @@ const authCheck = (req, res, next) => {
 
 router.get('/', authCheck, (req, res) => {
     // user can be anything - and we are making user the req.user property which we have access to
-    res.render('profile', {user: req.user});
+    res.render('profile', { user: req.user });
 });
 
 module.exports = router;

@@ -3,13 +3,14 @@ const passport = require('passport');
 
 // auth login route
 router.get('/login', (req, res) => {
-    res.render('login')
+    res.render('login', {user: req.user})
 });
 
 // auth logout route
 router.get('/logout', (req, res) => {
     // handle this route with passport
-    res.send('logging out');
+    req.logout();
+    res.redirect('/');
 });
 
 //auth login with google

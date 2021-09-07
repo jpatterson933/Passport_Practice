@@ -27,6 +27,7 @@ passport.use(
         clientSecret: keys.google.clientSecret
         // passport callback function
     }, (accessToken, refreshToken, profile, done) => {
+        console.log(profile)
         //accessToken is a token we receive from google to read user data
         //refresh token refreshes the access token
         //profile is the information that passport comes back with when it takes the code to google and brings back the profile information
@@ -42,7 +43,8 @@ passport.use(
                 // create a new user and save to db
                 new User({
                     username: profile.displayName,
-                    googleId: profile.id
+                    googleId: profile.id,
+                    thumbnail: profile._json.picture
 
                 }).save().then((newUser) => {
                     console.log('new user created' + newUser);
