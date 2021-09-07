@@ -1,6 +1,7 @@
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20');
 const keys = require('./keys');
+const User = require('../models/user-model');
 
 
 passport.use(
@@ -15,10 +16,19 @@ passport.use(
         //accessToken is a token we receive from google to read user data
         //refresh token refreshes the access token
         //profile is the information that passport comes back with when it takes the code to google and brings back the profile information
-        //done is called when we are done with this callback funciton
+        //done is called when we are done with this callback function
 
         // passport callback function
         console.log('passport callback function fired')
         console.log(profile)
+
+        // create a new user and save to db
+        new User ({
+            username: profile.displayName,
+            googleId: profile.id
+
+        }).save().then((newUser) => {
+            console.log('new user created' + newUser)
+        })
     })
 )
